@@ -13,8 +13,8 @@ static void printResult(UTF8Result r){
 	for(uint i = 0; i < n; i += 1){
 		buf[i] = r.data[i];
 	}
-	printf("%s | ", buf);
-	for(uint i = 0; i < 4; i += 1){
+	printf("%04x\t|%s\t|", utf8DecodePoint(r), buf);
+	for(uint i = 0; i < n; i += 1){
 		printByte(buf[i]);
 		printf(" ");
 	}
@@ -24,6 +24,7 @@ static void printResult(UTF8Result r){
 int main(){
 	UTF8Result r = {0};
 
+	printf("Point\t|Sym\t|Binary\n");
 	r = utf8EncodePoint(0x24);
 	printResult(r);
 	r = utf8EncodePoint(0xa3);
@@ -35,12 +36,12 @@ int main(){
 	r = utf8EncodePoint(0x10348);
 	printResult(r);
 
-	r = utf8EncodePoint(0x65e5);
-	printResult(r);
-	r = utf8EncodePoint(0x672c);
-	printResult(r);
-	r = utf8EncodePoint(0x8a9e);
-	printResult(r);
+	// r = utf8EncodePoint(0x65e5);
+	// printResult(r);
+	// r = utf8EncodePoint(0x672c);
+	// printResult(r);
+	// r = utf8EncodePoint(0x8a9e);
+	// printResult(r);
 
 	return 0;
 }

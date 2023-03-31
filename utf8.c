@@ -48,6 +48,29 @@ UTF8Result utf8EncodePoint(rune p){
 	return r;
 }
 
-// Decode one unicode point
+// Decode one unicode point from result, returns 0 on error.
 rune utf8DecodePoint(UTF8Result b){
+	rune p = 0;
+	uint len = utf8ResultLen(b);
+
+	if(len == 1) {
+		p = b.data[0];
+	}
+	else if(len == 2) {
+		p |= (b.data[1] & 0x3f);
+		p |= (b.data[0] & 0x1f) << 6;
+	}
+	else if(len == 3) {
+		p |= (b.data[2] & 0x3f);
+		p |= (b.data[1] & 0x3f) << 6;
+		p |= (b.data[0] & 0x0f) << 12;
+	}
+	else if(len == 4) {
+		p |= (b.data[3] & 0x3f);
+		p |= (b.data[2] & 0x3f) << 6;
+		p |= (b.data[1] & 0x3f) << 12;
+		p |= (b.data[0] & 0x07) << 18;
+	}
+
+	return p;
 }
