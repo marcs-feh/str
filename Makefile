@@ -1,13 +1,15 @@
 CC=clang -std=c11
 CFLAGS=-O2 -pipe -Wall -Wextra -fPIC
-LDFLAGS=
+LDFLAGS= -L. -lstr
 AR=ar
 
+.PHONY: test clean
+
 test: libstr.a test.o
-	$(CC) -o test.bin libstr.a test.o $(LDFLAGS)
+	$(CC) test.o -o test.bin $(LDFLAGS)
 	@./test.bin
 
-libstr.a: str.h str.o utf8.h utf8.o types.h
+libstr.a: str.h str.o utf8.h utf8.o
 	$(AR) rcs libstr.a str.o utf8.o
 
 str.o: str.c str.h utf8.o utf8.h
