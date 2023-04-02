@@ -3,11 +3,6 @@
 
 #include "types.h"
 
-struct MemBuf {
-	void* data; // Pointer to data
-	usize len;  // Length in bytes
-};
-
 // UTF-8 encoded codepoint, as a sequence of bytes, mostly for internal usage
 typedef struct{
 	byte data[4];
