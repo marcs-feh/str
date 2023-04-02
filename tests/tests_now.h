@@ -52,7 +52,8 @@ void test_display_results(struct Test* t){
 #define Test_Init(title_) struct Test _test_ = { .title = title_, .tests_count = 0, .error_count = 0}; \
 	test_display_header(&_test_);
 #define Test_End() test_display_results(&_test_); return _test_.error_count;
-#define Test(expr) { test_assert(&_test_, (expr), #expr); }
+// Test predicate.
+#define Tp(expr) { test_assert(&_test_, (expr), #expr); }
 
 #undef uint
 #undef TEST_COL_FAIL

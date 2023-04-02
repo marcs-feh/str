@@ -23,11 +23,12 @@ static void printResult(UTF8Result r){
 
 // Tests
 #include "tests/utf8.c"
+#include "tests/str.c"
 
 int main(){
-	uint test_res = 0
-		+ utf8_test()
+	uint test_res =
+		+ utf8Test()
+		+ strTest()
 	;
-
-	return 0;
+	return test_res;
 }
