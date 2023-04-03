@@ -2,7 +2,11 @@
 
 typedef struct MemBuf MemBuf;
 
-// Get length of UTF-8 result from its first byte. Returns 0 if invalid.
+static const rune utf8Range1byte = 0x0000007f;
+static const rune utf8Range2byte = 0x000007ff;
+static const rune utf8Range3byte = 0x0000ffff;
+static const rune utf8Range4byte = 0x0010ffff;
+
 uint utf8ResultLen(const UTF8Result r){
 	byte b = r.data[0];
 	if((b & 0x80) == 0x00) { return 1; }
@@ -12,10 +16,13 @@ uint utf8ResultLen(const UTF8Result r){
 	return 0;
 }
 
-static const rune utf8Range1byte = 0x0000007f;
-static const rune utf8Range2byte = 0x000007ff;
-static const rune utf8Range3byte = 0x0000ffff;
-static const rune utf8Range4byte = 0x0010ffff;
+uint utf8RuneLen(const rune p){
+	if(p <= utf8Range1byte){ return 1; }
+	if(p <= utf8Range2byte){ return 2; }
+	if(p <= utf8Range3byte){ return 3; }
+	if(p <= utf8Range4byte){ return 4; }
+	return 0;
+}
 
 // Encode Unicode point to UTF-8
 UTF8Result utf8EncodePoint(rune p){

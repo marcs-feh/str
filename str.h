@@ -29,5 +29,6 @@ void   strDel(String* s);
 String strFrom(const char* cs);
 void   strAppendRune(String* s, rune r);
 void   strAppendStr(String* s, const String* src);
+void   strAppendCstr(String* s, const char* cs);
 
 #endif /* include guard */

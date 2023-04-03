@@ -30,6 +30,17 @@ Test_Proc strTest(){
 		Test_Log("%s", s.buf.data);
 		strDel(&s);
 	}
+	{
+		String s = strNew(1);
+		strAppendCstr(&s, "Hello ");
+		strAppendCstr(&s, "again ");
+		Tp(s.size == 12);
+		strAppendRune(&s, 0x4e16);
+		strAppendRune(&s, 0x754c);
+		Tp(s.size == (12 + utf8RuneLen(0x4e16) + utf8RuneLen(0x754c)));
+		Test_Log("%s", s.buf.data);
+		strDel(&s);
+	}
 	Test_End();
 }
 
