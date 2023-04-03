@@ -19,6 +19,17 @@ Test_Proc strTest(){
 		Tp(s.buf.data != NULL);
 		strDel(&s);
 	}
+	{
+		String s = strFrom("Hello");
+		// String s = strNew(5);
+		Tp(s.size == 5);
+		strAppendRune(&s, ' ');
+		Tp(s.size == 6);
+		strAppendRune(&s, 0x4e16);
+		strAppendRune(&s, 0x754c);
+		printf(">> %s\n", s.buf.data);
+		strDel(&s);
+	}
 	Test_End();
 }
 

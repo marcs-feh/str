@@ -9,7 +9,7 @@ run: main.bin
 	@./main.bin
 
 dev:
-	@make run CFLAGS='-fsanitize=address,undefined' LDFLAGS='-lasan -lubsan'
+	@make run CFLAGS='-g -fsanitize=address,undefined' LDFLAGS='-lasan -lubsan'
 
 main.bin: libstr.a main.o
 	$(CC) main.o -o main.bin $(LDFLAGS)

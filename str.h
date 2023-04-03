@@ -4,8 +4,9 @@
 #include "types.h"
 #include "utf8.h"
 
+// Generic memory buffer with length
 typedef struct {
-	void* data; // Pointer to data
+	byte* data; // Pointer to data
 	usize len;  // Length in bytes
 } MemBuf;
 
@@ -24,9 +25,9 @@ typedef struct {
 // Creates a string with a size hint as underlying storage, use `size_hint = 0`
 // to only alloc when needed.
 String strNew(usize size_hint);
-void strDel(String* s);
+void   strDel(String* s);
 String strFrom(const char* cs);
-void strAppendRune(String* s, rune r);
-void strAppendStr(String* s, const String* src);
+void   strAppendRune(String* s, rune r);
+void   strAppendStr(String* s, const String* src);
 
 #endif /* include guard */
