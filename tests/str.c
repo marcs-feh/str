@@ -27,7 +27,7 @@ Test_Proc strTest(){
 		Tp(s.size == 6);
 		strAppendRune(&s, 0x4e16);
 		strAppendRune(&s, 0x754c);
-		printf(">> %s\n", s.buf.data);
+		Test_Log("%s", s.buf.data);
 		strDel(&s);
 	}
 	Test_End();

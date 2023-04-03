@@ -20,7 +20,6 @@ void strDel(String* s){
 	s->buf = (MemBuf){.data = NULL, .len = 0};
 }
 
-#include <stdio.h>
 static usize cstrLen(const char* cs){
 	usize n = 0;
 	while(cs[n] != '\0'){ n += 1; }
@@ -31,7 +30,6 @@ String strFrom(const char* cs){
 	usize n = cstrLen(cs);
 	String s = strNew(n + 2);
 
-	printf("n:%zu\n", n);
 	for(usize i = 0; i < n; i += 1){
 		s.buf.data[i] = cs[i];
 	}

@@ -35,7 +35,7 @@ void test_assert(struct Test* t, bool expr, const char* msg){
 	t->tests_count += 1;
 	if(!expr){
 		t->error_count += 1;
-		printf("\tFailed: %s\n", msg);
+		printf("  Failed: %s\n", msg);
 	}
 }
 
@@ -52,6 +52,7 @@ void test_display_results(struct Test* t){
 #define Test_Init(title_) struct Test _test_ = { .title = title_, .tests_count = 0, .error_count = 0}; \
 	test_display_header(&_test_);
 #define Test_End() test_display_results(&_test_); return _test_.error_count;
+#define Test_Log(fmt, ...) printf("  >> " fmt "\n", __VA_ARGS__);
 // Test predicate.
 #define Tp(expr) { test_assert(&_test_, (expr), #expr); }
 
