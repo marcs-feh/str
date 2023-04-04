@@ -7,13 +7,16 @@ static const rune utf8Range2byte = 0x000007ff;
 static const rune utf8Range3byte = 0x0000ffff;
 static const rune utf8Range4byte = 0x0010ffff;
 
-uint utf8ResultLen(const UTF8Result r){
-	byte b = r.data[0];
+uint utf8FirstByteLen(const byte b){
 	if((b & 0x80) == 0x00) { return 1; }
 	if((b & 0xe0) == 0xc0) { return 2; }
 	if((b & 0xf0) == 0xe0) { return 3; }
 	if((b & 0xf8) == 0xf0) { return 4; }
 	return 0;
+}
+
+uint utf8ResultLen(const UTF8Result r){
+	return utf8FirstByteLen(r.data[0]);
 }
 
 uint utf8RuneLen(const rune p){

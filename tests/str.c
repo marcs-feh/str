@@ -28,6 +28,8 @@ Test_Proc strTest(){
 		strAppendRune(&s, 0x4e16);
 		strAppendRune(&s, 0x754c);
 		Test_Log("%s", s.buf.data);
+		// Test_Log("len: %zu", strLen(&s));
+		Tp(strLen(&s) == 8);
 		strDel(&s);
 	}
 	{

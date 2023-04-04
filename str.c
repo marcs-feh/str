@@ -68,6 +68,19 @@ void strAppendRune(String* s, rune p){
 	s->size += len;
 }
 
+#include <stdio.h>
+usize strLen(String* s){
+	usize p = 0;
+	usize len = 0;
+	usize byteLen;
+	while(p < s->size){
+		byteLen = utf8FirstByteLen(s->buf.data[p]);
+		p += byteLen;
+		len += 1;
+	}
+	return len;
+}
+
 void strAppendCstr(String* s, const char* cs){
 	usize len = cstrLen(cs);
 
@@ -82,7 +95,7 @@ void strAppendCstr(String* s, const char* cs){
 	s->size += len;
 }
 
-// void strAppendStr(String* s, const String* src){
-// }
+void strAppendStr(String* s, const String* src){
+}
 
 
