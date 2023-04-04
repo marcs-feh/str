@@ -26,16 +26,18 @@ typedef struct {
 // to only alloc when needed.
 String strNew(usize size_hint);
 // Destroy string.
-void   strDel(String* s);
+void strDel(String* s);
 // Create string from a c-string.
 String strFrom(const char* cs);
+// Create copy of string.
+String strClone(const String* s);
 // Encode and append codepoint to string.
-void   strAppendRune(String* s, rune r);
+void strAppendRune(String* s, rune r);
 // Append contents of one string to another.
-void   strAppendStr(String* s, const String* src);
+void strAppendStr(String* s, const String* src);
 // Append c-string to string.
-void   strAppendCstr(String* s, const char* cs);
+void strAppendCstr(String* s, const char* cs);
 // Get length (in runes) from string.
-usize  strLen(String* s);
+usize strLen(const String* s);
 
 #endif /* include guard */
