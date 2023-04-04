@@ -2,8 +2,14 @@
 #include <stdlib.h>
 #include <string.h>
 
-
 #define MIN(a, b) (((a) < (b)) ? (a) : (b))
+
+static usize cstrLen(const char* cs){
+	if(cs == NULL){ return 0; }
+	usize n = 0;
+	while(cs[n] != '\0'){ n += 1; }
+	return n;
+}
 
 String strNew(usize size_hint){
 	String s = {0};
@@ -22,13 +28,6 @@ void strDel(String* s){
 	free(s->buf.data);
 	s->size = 0;
 	s->buf = (MemBuf){.data = NULL, .len = 0};
-}
-
-static usize cstrLen(const char* cs){
-	if(cs == NULL){ return 0; }
-	usize n = 0;
-	while(cs[n] != '\0'){ n += 1; }
-	return n;
 }
 
 String strFrom(const char* cs){
@@ -93,9 +92,6 @@ void strAppendCstr(String* s, const char* cs){
 	}
 
 	memcpy(s->buf.data + s->size, cs, len);
-	// for(usize i = 0; i < len; i += 1){
-	// 	s->buf.data[s->size + i] = cs[i];
-	// }
 
 	s->size += len;
 }
