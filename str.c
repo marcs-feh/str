@@ -1,5 +1,7 @@
 #include "str.h"
 #include <stdlib.h>
+#include <string.h>
+
 
 #define MIN(a, b) (((a) < (b)) ? (a) : (b))
 
@@ -33,9 +35,7 @@ String strFrom(const char* cs){
 	usize n = cstrLen(cs);
 	String s = strNew(n + 2);
 
-	for(usize i = 0; i < n; i += 1){
-		s.buf.data[i] = cs[i];
-	}
+	memcpy(s.buf.data, cs, n);
 
 	s.size = n;
 	return s;
@@ -57,9 +57,9 @@ usize strLen(const String* s){
 static void strBufResize(String* s, usize n){
 	byte* new_data = calloc(n, 1);
 	usize new_size = MIN(n, s->size);
-	for(usize i = 0; i < new_size; i += 1){
-		new_data[i] = s->buf.data[i];
-	}
+
+	memcpy(new_data, s->buf.data, new_size);
+
 	free(s->buf.data);
 	s->size = new_size;
 	s->buf = (MemBuf){
@@ -92,9 +92,10 @@ void strAppendCstr(String* s, const char* cs){
 		strBufResize(s, s->size + len + 2);
 	}
 
-	for(usize i = 0; i < len; i += 1){
-		s->buf.data[s->size + i] = cs[i];
-	}
+	memcpy(s->buf.data + s->size, cs, len);
+	// for(usize i = 0; i < len; i += 1){
+	// 	s->buf.data[s->size + i] = cs[i];
+	// }
 
 	s->size += len;
 }
@@ -107,9 +108,7 @@ void strAppendStr(String* s, const String* src){
 		strBufResize(s, s->size + len + 2);
 	}
 
-	for(usize i = 0; i < len; i += 1){
-		s->buf.data[s->size + i] = buf[i];
-	}
+	memcpy(s->buf.data + s->size, buf, len);
 
 	s->size += len;
 }
