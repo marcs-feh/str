@@ -52,10 +52,8 @@ usize strLen(const String* s){
 	return len;
 }
 
-// Get position of the first byte of N-th rune
-static usize strRuneBytePos(const String* s, usize n){
-	// if((n == 0) || (s->size > 0)){ return 0; }
-	usize byteLen;
+usize strRuneBytePos(const String* s, usize n){
+	usize byteLen = 1;
 	usize bp = 0;
 	usize rp = 0;
 	while(bp < s->size){
