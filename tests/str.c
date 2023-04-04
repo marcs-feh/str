@@ -22,14 +22,12 @@ Test_Proc strTest(){
 	}
 	{
 		String s = strFrom("Hello");
-		// String s = strNew(5);
 		Tp(s.size == 5);
 		strAppendRune(&s, ' ');
 		Tp(s.size == 6);
 		strAppendRune(&s, 0x4e16);
 		strAppendRune(&s, 0x754c);
 		Test_Log("%s", s.buf.data);
-		// Test_Log("len: %zu", strLen(&s));
 		Tp(strLen(&s) == 8);
 		strDel(&s);
 	}
@@ -53,6 +51,5 @@ Test_Proc strTest(){
 	}
 	Test_End();
 }
-
 
 #endif /* include guard */

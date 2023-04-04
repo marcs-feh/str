@@ -1,6 +1,8 @@
 #include "str.h"
 #include <stdlib.h>
 
+#define MIN(a, b) (((a) < (b)) ? (a) : (b))
+
 String strNew(usize size_hint){
 	String s = {0};
 	if(size_hint > 0){
@@ -39,12 +41,27 @@ String strFrom(const char* cs){
 	return s;
 }
 
-static void strResize(String* s, usize n){
+usize strLen(const String* s){
+	usize p = 0;
+	usize len = 0;
+	usize byteLen;
+	while(p < s->size){
+		byteLen = utf8FirstByteLen(s->buf.data[p]);
+		p += byteLen;
+		len += 1;
+	}
+	return len;
+}
+
+// Resize string to be n bytes long. This may result in invalid byte sequences, be warned!
+static void strBufResize(String* s, usize n){
 	byte* new_data = calloc(n, 1);
-	for(usize i = 0; i < s->size; i += 1){
+	usize new_size = MIN(n, s->size);
+	for(usize i = 0; i < new_size; i += 1){
 		new_data[i] = s->buf.data[i];
 	}
 	free(s->buf.data);
+	s->size = new_size;
 	s->buf = (MemBuf){
 		.data = new_data,
 		.len = n,
@@ -58,7 +75,7 @@ void strAppendRune(String* s, rune p){
 
 	if((s->size + len + 1) >= s->buf.len){
 		// increase by at least 5 because of a 4byte utf-8 char + NUL term
-		strResize(s, (s->buf.len * 1.5) + 5);
+		strBufResize(s, (s->buf.len * 1.5) + 5);
 	}
 
 	for(usize i = 0; i < len; i += 1){
@@ -68,23 +85,11 @@ void strAppendRune(String* s, rune p){
 	s->size += len;
 }
 
-usize strLen(const String* s){
-	usize p = 0;
-	usize len = 0;
-	usize byteLen;
-	while(p < s->size){
-		byteLen = utf8FirstByteLen(s->buf.data[p]);
-		p += byteLen;
-		len += 1;
-	}
-	return len;
-}
-
 void strAppendCstr(String* s, const char* cs){
 	usize len = cstrLen(cs);
 
 	if((s->size + len + 1) >= s->buf.len){
-		strResize(s, s->size + len + 2);
+		strBufResize(s, s->size + len + 2);
 	}
 
 	for(usize i = 0; i < len; i += 1){
@@ -99,7 +104,7 @@ void strAppendStr(String* s, const String* src){
 	const byte* buf = src->buf.data;
 
 	if((s->size + len + 1) >= s->buf.len){
-		strResize(s, s->size + len + 2);
+		strBufResize(s, s->size + len + 2);
 	}
 
 	for(usize i = 0; i < len; i += 1){
@@ -109,7 +114,6 @@ void strAppendStr(String* s, const String* src){
 	s->size += len;
 }
 
-// #include <stdio.h>
 String strClone(const String* s){
 	String sc = strNew(s->size + 1);
 	for(usize i = 0; i < s->size; i += 1){
@@ -118,5 +122,4 @@ String strClone(const String* s){
 	sc.size = s->size;
 	return sc;
 }
-
 
