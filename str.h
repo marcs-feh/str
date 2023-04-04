@@ -37,6 +37,11 @@ void strAppendRune(String* s, rune r);
 void strAppendStr(String* s, const String* src);
 // Append c-string to string.
 void strAppendCstr(String* s, const char* cs);
+// Get position of the first byte of N-th rune, if it is out of bounds, a
+// position bigger than the string's size is returned.
+// usize strRuneBytePos(const String* s, usize n);
+// Get codepoint at a position, returns 0 if out of bounds.
+rune strAt(const String* s, usize idx);
 // Get length (in runes) from string.
 usize strLen(const String* s);
 

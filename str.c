@@ -41,15 +41,49 @@ String strFrom(const char* cs){
 }
 
 usize strLen(const String* s){
-	usize p = 0;
+	usize i = 0;
 	usize len = 0;
 	usize byteLen;
-	while(p < s->size){
-		byteLen = utf8FirstByteLen(s->buf.data[p]);
-		p += byteLen;
+	while(i < s->size){
+		byteLen = utf8FirstByteLen(s->buf.data[i]);
+		i += byteLen;
 		len += 1;
 	}
 	return len;
+}
+
+// Get position of the first byte of N-th rune
+static usize strRuneBytePos(const String* s, usize n){
+	// if((n == 0) || (s->size > 0)){ return 0; }
+	usize byteLen;
+	usize bp = 0;
+	usize rp = 0;
+	while(bp < s->size){
+		if(rp == n){ break; }
+		byteLen = utf8FirstByteLen(s->buf.data[bp]);
+		bp += byteLen;
+		rp += 1;
+	}
+
+	if((bp + byteLen) > s->size){ return s->size + 1; }
+
+	return bp;
+}
+
+rune strAt(const String* s, usize idx){
+	if(idx >= s->size){ return 0; }
+	usize pos = strRuneBytePos(s, idx);
+	if(pos >= s->size){
+		return 0;
+	}
+
+	usize len = utf8FirstByteLen(s->buf.data[pos]);
+	UTF8Result buf = {0};
+	for(usize i = 0; i < len; i += 1){
+		buf.data[i] = s->buf.data[pos + i];
+	}
+
+	return utf8DecodePoint(buf);
 }
 
 // Resize string to be n bytes long. This may result in invalid byte sequences, be warned!
@@ -64,7 +98,7 @@ static void strBufResize(String* s, usize n){
 	s->buf = (MemBuf){
 		.data = new_data,
 		.len = n,
-	};
+		};
 }
 
 void strAppendRune(String* s, rune p){

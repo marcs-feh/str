@@ -46,8 +46,21 @@ Test_Proc strTest(){
 		Tp(strcmp((const char*)s2.buf.data, (const char*)s.buf.data) == 0);
 		strAppendStr(&s, &s2);
 		Tp(s.size == (n*2));
+
+		Tp(strAt(&s2, 0) == 'H');
+		Tp(strAt(&s2, 12) == 0x4e16);
+		Tp(strAt(&s2, 13) == 0x754c);
+		Tp(strAt(&s2, 15) == 0);
+
 		strDel(&s);
 		strDel(&s2);
+	}
+
+	{
+		String s = strFrom("");
+		Tp(strLen(&s) == 0);
+		Tp(s.size == 0);
+		strDel(&s);
 	}
 	Test_End();
 }
