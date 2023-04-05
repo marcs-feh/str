@@ -62,6 +62,14 @@ Test_Proc strTest(){
 		Tp(s.size == 0);
 		strDel(&s);
 	}
+
+	{
+		String s = strNew(0);
+		Tp(strData(&s) == NULL);
+		strAppendRune(&s, 0x61);
+		Tp(strData(&s) != NULL);
+		strDel(&s);
+	}
 	Test_End();
 }
 

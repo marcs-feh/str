@@ -4,6 +4,10 @@
 
 #define MIN(a, b) (((a) < (b)) ? (a) : (b))
 
+const byte* strData(const String* s){
+	return s->buf.data;
+}
+
 static usize cstrLen(const char* cs){
 	if(cs == NULL){ return 0; }
 	usize n = 0;
@@ -89,14 +93,16 @@ static void strBufResize(String* s, usize n){
 	byte* new_data = calloc(n, 1);
 	usize new_size = MIN(n, s->size);
 
-	memcpy(new_data, s->buf.data, new_size);
+	if(s->buf.data != NULL){
+		memcpy(new_data, s->buf.data, new_size);
+	}
 
 	free(s->buf.data);
 	s->size = new_size;
 	s->buf = (MemBuf){
 		.data = new_data,
 		.len = n,
-		};
+	};
 }
 
 void strAppendRune(String* s, rune p){

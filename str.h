@@ -16,12 +16,6 @@ typedef struct {
 	usize  size; // Length in bytes
 } String;
 
-// // UTF-32 encoded string.
-// typedef struct {
-// 	MemBuf buf;  // Data buffer
-// 	usize  size; // Length in bytes
-// } String32;
-
 // Creates a string with a size hint as underlying storage, use `size_hint = 0`
 // to only alloc when needed.
 String strNew(usize size_hint);
@@ -44,5 +38,25 @@ usize strRuneBytePos(const String* s, usize n);
 rune strAt(const String* s, usize idx);
 // Get length (in runes) from string.
 usize strLen(const String* s);
+// Get raw data of string
+const byte* strData(const String* s);
+
+// UTF-32 encoded string.
+typedef struct {
+	MemBuf buf;  // Data buffer
+	usize  size; // Length in bytes
+} String32;
+
+// Creates a string32 with a size hint as underlying storage, use `size_hint = 0`
+// to only alloc when needed.
+String32 str32New(usize size_hint);
+// Destroy string32.
+void str32Del(String32* s);
+// Create string from a c-string.
+String str32From(const char* cs);
+// Create copy of string.
+String str32Clone(const String32* s);
+// Encode and append codepoint to string.
+void str32AppendRune(String32* s, rune r);
 
 #endif /* include guard */
