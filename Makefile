@@ -14,11 +14,14 @@ dev:
 main.bin: libstr.a main.o
 	$(CC) main.o -o main.bin $(LDFLAGS)
 
-libstr.a: str.h str.o utf8.h utf8.o
-	$(AR) rcs libstr.a str.o utf8.o
+libstr.a: str.h str.o utf8.h utf8.o str32.o
+	$(AR) rcs libstr.a str.o utf8.o str32.o
 
 str.o: str.c str.h utf8.o utf8.h
 	$(CC) $(CFLAGS) -o str.o -c str.c
+
+str32.o: str32.c str.h utf8.o utf8.h
+	$(CC) $(CFLAGS) -o str32.o -c str32.c
 
 utf8.o: utf8.c utf8.h
 	$(CC) $(CFLAGS) -o utf8.o -c utf8.c
