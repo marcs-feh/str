@@ -149,10 +149,19 @@ void strAppendStr(String* s, const String* src){
 
 String strClone(const String* s){
 	String sc = strNew(s->size + 1);
-	for(usize i = 0; i < s->size; i += 1){
-		sc.buf.data[i] = s->buf.data[i];
-	}
+	memcpy(sc.buf.data, s->buf.data, s->size);
 	sc.size = s->size;
 	return sc;
+}
+
+bool strEq(const String* rhs, const String* lhs){
+	if((rhs == NULL) || (lhs == NULL)){ return false; }
+	if(rhs->size != lhs->size){ return false; }
+
+	for(usize i = 0; i < rhs->size; i += 1){
+		if(rhs->buf.data[i] != lhs->buf.data[i]){ return false; }
+	}
+
+	return true;
 }
 

@@ -1,7 +1,7 @@
-// C11 header for cleaner type names and definitions
+#ifndef _types_h_include_
+#define _types_h_include_
 
-#ifndef INCLUDE_TYPES_H_
-#define INCLUDE_TYPES_H_
+// C11 header for cleaner type names and definitions
 
 #include <stdint.h>
 #include <stdbool.h>
@@ -35,4 +35,5 @@ typedef size_t        usize;
 	typedef ptrdiff_t     ssize;
 #endif
 
-#endif /* include guard */
+
+#endif /* Include guard */

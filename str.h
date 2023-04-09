@@ -1,5 +1,5 @@
-#ifndef INCLUDE_STR_H_
-#define INCLUDE_STR_H_
+#ifndef _str_h_include_
+#define _str_h_include_
 
 #include "types.h"
 #include "utf8.h"
@@ -40,6 +40,8 @@ rune strAt(const String* s, usize idx);
 usize strLen(const String* s);
 // Get raw data of string
 const byte* strData(const String* s);
+// Check if 2 strings are equal
+bool strEq(const String* rhs, const String* lhs);
 
 // UTF-32 encoded string.
 typedef struct {
@@ -47,16 +49,16 @@ typedef struct {
 	usize  size; // Length in bytes
 } String32;
 
-// Creates a string32 with a size hint as underlying storage, use `size_hint = 0`
-// to only alloc when needed.
+// Creates a string32 with a size hint as underlying storage (in number of
+// runes), use `size_hint = 0` to only alloc when needed.
 String32 str32New(usize size_hint);
 // Destroy string32.
 void str32Del(String32* s);
-// Create string from a c-string.
-String str32From(const char* cs);
+// // Create string from a c-string.
+// String str32From(const char* cs);
 // Create copy of string.
-String str32Clone(const String32* s);
+String32 str32Clone(const String32* s);
 // Encode and append codepoint to string.
 void str32AppendRune(String32* s, rune r);
 
-#endif /* include guard */
+#endif /* Include guard */

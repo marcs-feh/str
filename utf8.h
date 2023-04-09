@@ -1,5 +1,5 @@
-#ifndef INCLUDE_UTF8_H_
-#define INCLUDE_UTF8_H_
+#ifndef _utf8_h_include_
+#define _utf8_h_include_
 
 #include "types.h"
 
@@ -19,5 +19,4 @@ UTF8Result utf8EncodePoint(rune r);
 // Decode one unicode point
 rune utf8DecodePoint(UTF8Result b);
 
-
-#endif /* include guard */
+#endif /* Include guard */
