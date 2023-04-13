@@ -60,5 +60,9 @@ void str32Del(String32* s);
 String32 str32Clone(const String32* s);
 // Encode and append codepoint to string.
 void str32AppendRune(String32* s, rune r);
+// Get codepoint at a position, returns 0 if out of bounds.
+rune str32At(const String32* s, usize n);
+// Get length of String32, in runes.
+usize str32Len(const String32* s);
 
 #endif /* Include guard */

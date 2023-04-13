@@ -49,10 +49,21 @@ String32 str32Clone(const String32* s){
 	return sc;
 }
 
+rune str32At(const String32* s, usize n){
+	if(n >= str32Len(s)){ return 0; }
+	rune p = * ((rune*) &s->buf.data[n * 4]);
+	return p;
+}
+
+usize str32Len(const String32* s){
+	return s->size / sizeof(rune);
+}
+
 void str32AppendRune(String32* s, rune r){
-	if((s->buf.len + sizeof(rune)) >= s->buf.len){
+	if((s->buf.len + sizeof(rune) + 1) >= s->buf.len){
 		str32BufResize(s, (s->buf.len * 1.5) + 1);
 	}
-	s->buf.data[s->size] = r;
-	s->size += 1;
+	rune* rp = (rune*)(&s->buf.data[s->size]);
+	rp[0] = r;
+	s->size += 4;
 }
